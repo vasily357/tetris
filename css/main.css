@@ -1,0 +1,19 @@
+#field > div {
+  display: inline-block;
+  margin: 10px;
+  vertical-align: top;
+}
+
+#panel {
+  text-align: right;
+}
+
+.row > div {
+  display: inline-block;
+}
+
+.cell {
+  height: 40px;
+  width: 40px;
+  background-color: gainsboro;
+}
