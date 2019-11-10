@@ -14,7 +14,7 @@
 
 #next {
   display: grid;
-  grid-template: repeat(3, 4vh)/repeat(4, 4vh);
+  grid-template: repeat(4, 4vh)/repeat(4, 4vh);
 }
 
 .cell {

@@ -14,10 +14,10 @@ class Game {
 
   tick() {
     //console.log("tick");
-    if (!this.shape) {
+    if(!this.shape) {
       this.shape = this.nextShape || new Shape(this.glass);
       this.nextShape = new Shape(this.glass);
-      this.next.draw(this.nextShape.getShape[HORIZONTAL](1, 0))
+      this.next.draw(this.nextShape.getShape[this.nextShape.position](1, 0))
     }
     if(!this.shape.step('down')) {
       this.shape = undefined
@@ -69,13 +69,14 @@ class Next {
     this.map = [
       [cells[0], cells[1], cells[2], cells[3]],
       [cells[4], cells[5], cells[6], cells[7]],
-      [cells[8], cells[9], cells[10], cells[11]]
+      [cells[8], cells[9], cells[10], cells[11]],
+      [cells[12], cells[13], cells[14], cells[15]]
     ]
   }
 
   draw(shape) {
-    this.map.forEach(row => row.forEach(cell => cell.style.backgroundColor = 'white', this), this)
-    shape.forEach(coord => {this.map[coord.y][coord.x].style.backgroundColor = 'orange'})
+    this.map.forEach(row => row.forEach(cell => cell.style.backgroundColor = 'white'))
+    shape.forEach(coord => this.map[coord.y][coord.x].style.backgroundColor = 'orange')
   }
 
 }
@@ -126,12 +127,12 @@ class Glass {
       }
     }
     if(is_draw) {
-      this.shapeCoordinates && this.shapeCoordinates.length && this.shapeCoordinates.forEach(coord => {
-        this.map[coord.y][coord.x].cell.style.backgroundColor = 'gainsboro'
-      })
-      shape.forEach(coord => {
-        this.map[coord.y][coord.x].cell.style.backgroundColor = 'orange'
-      })
+      this.shapeCoordinates && 
+      this.shapeCoordinates.length && 
+        this.shapeCoordinates.forEach(coord => this.map[coord.y][coord.x].cell.style.backgroundColor = 'gainsboro')
+      
+      shape.forEach(coord => this.map[coord.y][coord.x].cell.style.backgroundColor = 'orange')
+      
       this.shapeCoordinates = shape
     }
     
@@ -140,104 +141,108 @@ class Glass {
 
 }
 
-const shapes = [
-  [
-    (x, y) => [
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x, y: y + 1 },
-      { x: x + 1, y: y + 1 }
-    ], 
-    (x, y) => [
-      { x: x, y: y },
-      { x: x, y: y + 1 },
-      { x: x, y: y + 2 },
-      { x: x - 1, y: y + 2 }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x - 1, y: y },
-      { x: x, y: y },
-      { x: x, y: y + 1 },
-      { x: x + 1, y: y + 1 }
-    ], 
-    (x, y) => [
-      { x: x, y: y },
-      { x: x, y: y + 1 },
-      { x: x - 1, y: y + 1 },
-      { x: x - 1, y: y + 2 }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x + 1, y: y },
-      { x: x + 1, y: y + 1 },
-      { x: x, y: y + 1 },
-      { x: x - 1, y: y + 1 }
-    ], 
-    (x, y) => [
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x - 1, y: y + 2 },
-      { x: x, y: y + 2 }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x, y: y },
-      { x: x + 1, y: y },
-      { x: x, y: y + 1 },
-      { x: x - 1, y: y + 1 }
-    ], 
-    (x, y) => [
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x, y: y + 1 },
-      { x: x, y: y + 2 }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x, y: y },
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x, y: y + 1 }
+const SHAPES = [
+    [
+      (x, y) => [
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x, y: y + 1 },
+        { x: x + 1, y: y + 1 }
+      ], 
+      (x, y) => [
+        { x: x, y: y },
+        { x: x, y: y + 1 },
+        { x: x, y: y + 2 },
+        { x: x - 1, y: y + 2 }
+      ],
+      (x, y) => [
+        { x: x, y: y },
+        { x: x - 1, y: y },
+        { x: x + 1, y: y },
+        { x: x + 1, y: y + 1 }
+      ]
     ],
-    (x, y) => [
-      { x: x, y: y },
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x, y: y + 1 }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x, y: y },
-      { x: x, y: y + 1 },
-      { x: x, y: y + 2 },
-      { x: x, y: y + 3 }
-    ], 
-    (x, y) => [
-      { x: x - 1, y: y + 1 },
-      { x: x, y: y + 1 },
-      { x: x + 1, y: y + 1 },
-      { x: x + 2, y: y + 1 }
+    [
+      (x, y) => [
+        { x: x - 1, y: y },
+        { x: x, y: y },
+        { x: x, y: y + 1 },
+        { x: x + 1, y: y + 1 }
+      ], 
+      (x, y) => [
+        { x: x, y: y },
+        { x: x, y: y + 1 },
+        { x: x - 1, y: y + 1 },
+        { x: x - 1, y: y + 2 }
+      ]
+    ],
+    [
+      (x, y) => [
+        { x: x + 1, y: y },
+        { x: x + 1, y: y + 1 },
+        { x: x, y: y + 1 },
+        { x: x - 1, y: y + 1 }
+      ], 
+      (x, y) => [
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x - 1, y: y + 2 },
+        { x: x, y: y + 2 }
+      ],
+      (x, y) => [
+        { x: x, y: y },
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x + 1, y: y }
+      ]
+    ],
+    [
+      (x, y) => [
+        { x: x, y: y },
+        { x: x + 1, y: y },
+        { x: x, y: y + 1 },
+        { x: x - 1, y: y + 1 }
+      ], 
+      (x, y) => [
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x, y: y + 1 },
+        { x: x, y: y + 2 }
+      ]
+    ],
+    [
+      (x, y) => [
+        { x: x, y: y },
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x, y: y + 1 }
+      ]
+    ],
+    [
+      (x, y) => [
+        { x: x, y: y },
+        { x: x, y: y + 1 },
+        { x: x, y: y + 2 },
+        { x: x, y: y + 3 }
+      ], 
+      (x, y) => [
+        { x: x - 1, y: y + 1 },
+        { x: x, y: y + 1 },
+        { x: x + 1, y: y + 1 },
+        { x: x + 2, y: y + 1 }
+      ]
     ]
   ]
-]
-
-const VERTICAL = 0, HORIZONTAL = 1
 
 class Shape {
 
   constructor(glass) {
     this.x = 5
     this.y = -1
-    this.position = HORIZONTAL
+    this.position = 0
     const rand = Math.floor(Math.random() * (5 + 1))
-    //const rand = 3
-    this.getShape = shapes[rand]
+    //const rand = 2
+    this.getShape = SHAPES[rand]
     this.glass = glass;
   }
 
@@ -259,25 +264,22 @@ class Shape {
 
   left() {
     const shape = this.getShape[this.position](this.x - 1, this.y)
-    const draw = this.glass.draw(shape)
-    if(draw) {
+    if(this.glass.draw(shape)) {
       this.x--
     }
   }
 
   right() {
     const shape = this.getShape[this.position](this.x + 1, this.y)
-    const draw = this.glass.draw(shape)
-    if(draw) {
+    if(this.glass.draw(shape)) {
       this.x++
     }
   }
 
   turn() {
-    const position = this.position === VERTICAL ? HORIZONTAL : VERTICAL
+    const position = this.getShape[this.position + 1] ? this.position + 1 : 0
     const shape = this.getShape[position](this.x, this.y)
-    const draw = this.glass.draw(shape)
-    if(draw) {
+    if(this.glass.draw(shape)) {
       this.position = position
     }
   }
