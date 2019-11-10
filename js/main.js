@@ -8,17 +8,18 @@ class Game {
     this.level = 1;
 
     this.glass = new Glass();
-    //this.shape = new Shape(this.glass);
+
+    this.next = new Next()
   }
 
   tick() {
-    console.log("tick");
-
+    //console.log("tick");
     if (!this.shape) {
-      this.shape = new Shape(this.glass);
+      this.shape = this.nextShape || new Shape(this.glass);
+      this.nextShape = new Shape(this.glass);
+      this.next.draw(this.nextShape.getShape[HORIZONTAL](1, 0))
     }
-    const step = this.shape.step('down');
-    if(!step) {
+    if(!this.shape.step('down')) {
       this.shape = undefined
     }
     this.timer_id = setTimeout(this.tick.bind(this), this.interval);
@@ -60,6 +61,25 @@ class Game {
 
 }
 
+class Next {
+
+  constructor() {
+    const cells = Array.from(document.querySelectorAll('#next .cell'))
+
+    this.map = [
+      [cells[0], cells[1], cells[2], cells[3]],
+      [cells[4], cells[5], cells[6], cells[7]],
+      [cells[8], cells[9], cells[10], cells[11]]
+    ]
+  }
+
+  draw(shape) {
+    this.map.forEach(row => row.forEach(cell => cell.style.backgroundColor = 'white', this), this)
+    shape.forEach(coord => {this.map[coord.y][coord.x].style.backgroundColor = 'orange'})
+  }
+
+}
+
 class Glass {
 
   constructor() {
@@ -68,10 +88,9 @@ class Glass {
 
     this.shapeCoordinates = undefined
 
-    this.body = document.querySelector('#glass')
+    const body = document.querySelector('#glass')
 
     this.map = []
-    console.log("ROW", row_tpl)
     for(let i = 0; i < this.height; i++) {
       const list = []
       const row = row_tpl.content.cloneNode(true)
@@ -83,7 +102,7 @@ class Glass {
           value: 0
         })
       }
-      this.body.appendChild(row)
+      body.appendChild(row)
       this.map.push(list)
     }
 
@@ -115,9 +134,6 @@ class Glass {
       })
       this.shapeCoordinates = shape
     }
-    //else {
-    //  down && this.down(this.shapeCoordinates)
-    //}
     
     return is_draw
   }
@@ -172,7 +188,7 @@ const shapes = [
       { x: x, y: y },
       { x: x + 1, y: y },
       { x: x, y: y + 1 },
-      { x: x + 1, y: y + 1 }
+      { x: x - 1, y: y + 1 }
     ], 
     (x, y) => [
       { x: x - 1, y: y },
@@ -211,10 +227,6 @@ const shapes = [
   ]
 ]
 
-function getRandom(max) {
-  return Math.floor(Math.random() * (max + 1))
-}
-
 const VERTICAL = 0, HORIZONTAL = 1
 
 class Shape {
@@ -223,8 +235,10 @@ class Shape {
     this.x = 5
     this.y = -1
     this.position = HORIZONTAL
+    const rand = Math.floor(Math.random() * (5 + 1))
+    //const rand = 3
+    this.getShape = shapes[rand]
     this.glass = glass;
-    this.getShape = shapes[getRandom(5)]
   }
 
   step(direction) {
