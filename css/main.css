@@ -4,21 +4,21 @@
 }
 
 #panel {
-  margin: 0 0 0 .5vh;
+  margin: 0 0 0 0.5vh;
 }
 
 #glass {
   display: grid;
-  grid-template: repeat(20, 4vh)/repeat(10, 4vh);
+  grid-template: repeat(20, 4vh) / repeat(10, 4vh);
 }
 
 #next {
   display: grid;
-  grid-template: repeat(4, 4vh)/repeat(4, 4vh);
+  grid-template: repeat(4, 4vh) / repeat(4, 4vh);
 }
 
 .cell {
-  border: .1vh solid white
+  border: 0.1vh solid white;
 }
 
 .row > div {
@@ -26,6 +26,5 @@
 }
 
 .cell {
-  
   background-color: gainsboro;
 }
