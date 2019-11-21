@@ -108,17 +108,30 @@ class Glass {
   }
 
   check() {
+    const indexes = [];
+
+    const lasts = [];
     for (let i = 0; i < this.map.length; i++) {
-      const is_filled = !this.map[i].reduce(
+      /* const is_filled = !this.map[i].reduce(
         (acc, item) => acc || item.value === 0,
         false
-      );
+      ); */
+
+      for (let j = 0; j < this.map[i].length; j++) {
+        if (this.map[i][j].value === 1) {
+        }
+      }
 
       if (is_filled) {
         console.log("IS_FILLED", i);
+        //this.dropRow(i)
+        indexes.push(i);
       }
     }
+    indexes.length && dropRow(indexes);
   }
+
+  dropRow(indexes) {}
 
   down() {
     this.shapeCoordinates.forEach(coord => {
