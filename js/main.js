@@ -108,30 +108,44 @@ class Glass {
   }
 
   check() {
-    const indexes = [];
+    let count, begin;
 
-    const lasts = [];
     for (let i = 0; i < this.map.length; i++) {
-      /* const is_filled = !this.map[i].reduce(
-        (acc, item) => acc || item.value === 0,
-        false
-      ); */
+      let is_filled = true;
 
       for (let j = 0; j < this.map[i].length; j++) {
-        if (this.map[i][j].value === 1) {
+        if (this.map[i][j].value === 1 && !begin) {
+          begin = i;
+        } else if (this.map[i][j].value === 0 && is_filled) {
+          is_filled = false;
         }
       }
 
       if (is_filled) {
         console.log("IS_FILLED", i);
-        //this.dropRow(i)
-        indexes.push(i);
+        if (!count) {
+          count = 1;
+        } else {
+          count++;
+        }
       }
     }
-    indexes.length && dropRow(indexes);
+
+    count && this.dropRows(begin, count);
   }
 
-  dropRow(indexes) {}
+  dropRows(begin, count) {
+    console.log("begin", begin);
+    console.log("count", count);
+    for (let i = begin; i < count; i++) {
+      for (let j = 0; j < this.map[i].length; j++) {
+        if (this.map[i][j].value === 1) {
+          this.map[i][j].value = 0;
+          this.map[i][j].cell.style.backgroundColor = "gainsboro";
+        }
+      }
+    }
+  }
 
   down() {
     this.shapeCoordinates.forEach(coord => {
