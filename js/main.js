@@ -1,3 +1,100 @@
+const SHAPES = [
+    [
+      (x, y) => [
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x, y: y + 1 },
+        { x: x + 1, y: y + 1 }
+      ],
+      (x, y) => [
+        { x: x, y: y },
+        { x: x, y: y + 1 },
+        { x: x, y: y + 2 },
+        { x: x - 1, y: y + 2 }
+      ],
+      (x, y) => [
+        { x: x, y: y },
+        { x: x - 1, y: y },
+        { x: x + 1, y: y },
+        { x: x + 1, y: y + 1 }
+      ]
+    ],
+    [
+      (x, y) => [
+        { x: x - 1, y: y },
+        { x: x, y: y },
+        { x: x, y: y + 1 },
+        { x: x + 1, y: y + 1 }
+      ],
+      (x, y) => [
+        { x: x, y: y },
+        { x: x, y: y + 1 },
+        { x: x - 1, y: y + 1 },
+        { x: x - 1, y: y + 2 }
+      ]
+    ],
+    [
+      (x, y) => [
+        { x: x + 1, y: y },
+        { x: x + 1, y: y + 1 },
+        { x: x, y: y + 1 },
+        { x: x - 1, y: y + 1 }
+      ],
+      (x, y) => [
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x - 1, y: y + 2 },
+        { x: x, y: y + 2 }
+      ],
+      (x, y) => [
+        { x: x, y: y },
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x + 1, y: y }
+      ]
+    ],
+    [
+      (x, y) => [
+        { x: x, y: y },
+        { x: x + 1, y: y },
+        { x: x, y: y + 1 },
+        { x: x - 1, y: y + 1 }
+      ],
+      (x, y) => [
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x, y: y + 1 },
+        { x: x, y: y + 2 }
+      ]
+    ],
+    [
+      (x, y) => [
+        { x: x, y: y },
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x, y: y + 1 }
+      ]
+    ],
+    [
+      (x, y) => [
+        { x: x, y: y },
+        { x: x, y: y + 1 },
+        { x: x, y: y + 2 },
+        { x: x, y: y + 3 }
+      ],
+      (x, y) => [
+        { x: x - 1, y: y + 1 },
+        { x: x, y: y + 1 },
+        { x: x + 1, y: y + 1 },
+        { x: x + 2, y: y + 1 }
+      ]
+    ]
+  ],
+  GRAY = "gainsboro",
+  ORANGE = "orange",
+  GREEN = "yellowgreen",
+  WHITE = "white";
+
 class Game {
   constructor() {
     this.timer_id = null;
@@ -73,10 +170,10 @@ class Next {
 
   draw(shape) {
     this.map.forEach(row =>
-      row.forEach(cell => (cell.style.backgroundColor = "white"))
+      row.forEach(cell => (cell.style.backgroundColor = WHITE))
     );
     shape.forEach(
-      coord => (this.map[coord.y][coord.x].style.backgroundColor = "orange")
+      coord => (this.map[coord.y][coord.x].style.backgroundColor = ORANGE)
     );
   }
 }
@@ -107,7 +204,7 @@ class Glass {
     }
   }
 
-  check() {
+  checkRows() {
     let count, begin;
 
     for (let i = 0; i < this.map.length; i++) {
@@ -141,7 +238,7 @@ class Glass {
       for (let j = 0; j < this.map[i].length; j++) {
         if (this.map[i][j].value === 1) {
           this.map[i][j].value = 0;
-          this.map[i][j].cell.style.backgroundColor = "gainsboro";
+          this.map[i][j].cell.style.backgroundColor = GRAY;
         }
       }
     }
@@ -150,10 +247,10 @@ class Glass {
   down() {
     this.shapeCoordinates.forEach(coord => {
       this.map[coord.y][coord.x].value = 1;
-      this.map[coord.y][coord.x].cell.style.backgroundColor = "yellowgreen";
+      this.map[coord.y][coord.x].cell.style.backgroundColor = GREEN;
     });
     this.shapeCoordinates = undefined;
-    this.check();
+    this.checkRows();
   }
 
   draw(shape) {
@@ -174,13 +271,12 @@ class Glass {
         this.shapeCoordinates.length &&
         this.shapeCoordinates.forEach(
           coord =>
-            (this.map[coord.y][coord.x].cell.style.backgroundColor =
-              "gainsboro")
+            (this.map[coord.y][coord.x].cell.style.backgroundColor = GRAY)
         );
 
       shape.forEach(
         coord =>
-          (this.map[coord.y][coord.x].cell.style.backgroundColor = "orange")
+          (this.map[coord.y][coord.x].cell.style.backgroundColor = ORANGE)
       );
 
       this.shapeCoordinates = shape;
@@ -189,99 +285,6 @@ class Glass {
     return is_draw;
   }
 }
-
-const SHAPES = [
-  [
-    (x, y) => [
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x, y: y + 1 },
-      { x: x + 1, y: y + 1 }
-    ],
-    (x, y) => [
-      { x: x, y: y },
-      { x: x, y: y + 1 },
-      { x: x, y: y + 2 },
-      { x: x - 1, y: y + 2 }
-    ],
-    (x, y) => [
-      { x: x, y: y },
-      { x: x - 1, y: y },
-      { x: x + 1, y: y },
-      { x: x + 1, y: y + 1 }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x - 1, y: y },
-      { x: x, y: y },
-      { x: x, y: y + 1 },
-      { x: x + 1, y: y + 1 }
-    ],
-    (x, y) => [
-      { x: x, y: y },
-      { x: x, y: y + 1 },
-      { x: x - 1, y: y + 1 },
-      { x: x - 1, y: y + 2 }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x + 1, y: y },
-      { x: x + 1, y: y + 1 },
-      { x: x, y: y + 1 },
-      { x: x - 1, y: y + 1 }
-    ],
-    (x, y) => [
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x - 1, y: y + 2 },
-      { x: x, y: y + 2 }
-    ],
-    (x, y) => [
-      { x: x, y: y },
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x + 1, y: y }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x, y: y },
-      { x: x + 1, y: y },
-      { x: x, y: y + 1 },
-      { x: x - 1, y: y + 1 }
-    ],
-    (x, y) => [
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x, y: y + 1 },
-      { x: x, y: y + 2 }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x, y: y },
-      { x: x - 1, y: y },
-      { x: x - 1, y: y + 1 },
-      { x: x, y: y + 1 }
-    ]
-  ],
-  [
-    (x, y) => [
-      { x: x, y: y },
-      { x: x, y: y + 1 },
-      { x: x, y: y + 2 },
-      { x: x, y: y + 3 }
-    ],
-    (x, y) => [
-      { x: x - 1, y: y + 1 },
-      { x: x, y: y + 1 },
-      { x: x + 1, y: y + 1 },
-      { x: x + 2, y: y + 1 }
-    ]
-  ]
-];
 
 class Shape {
   constructor(glass) {
