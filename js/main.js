@@ -205,21 +205,19 @@ class Glass {
   }
 
   checkRows() {
-    let count, begin;
+    const lastPositions = new Map();
+    let count;
 
-    for (let i = 0; i < this.map.length; i++) {
+    for (let y = 0; y < this.map.length; y++) {
       let is_filled = true;
-
-      for (let j = 0; j < this.map[i].length; j++) {
-        if (this.map[i][j].value === 1 && !begin) {
-          begin = i;
-        } else if (this.map[i][j].value === 0 && is_filled) {
+      for (let x = 0; x < this.map[y].length; x++) {
+        if (this.map[y][x].value === 1 && !lastPositions.has(x)) {
+          lastPositions.set(x, y);
+        } else if (this.map[y][x].value === 0 && is_filled) {
           is_filled = false;
         }
       }
-
       if (is_filled) {
-        console.log("IS_FILLED", i);
         if (!count) {
           count = 1;
         } else {
@@ -227,20 +225,15 @@ class Glass {
         }
       }
     }
-
-    count && this.dropRows(begin, count);
+    count && this.dropRows(lastPositions, count);
   }
 
-  dropRows(begin, count) {
-    console.log("begin", begin);
-    console.log("count", count);
-    for (let i = begin; i < count; i++) {
-      for (let j = 0; j < this.map[i].length; j++) {
-        if (this.map[i][j].value === 1) {
-          this.map[i][j].value = 0;
-          this.map[i][j].cell.style.backgroundColor = GRAY;
-        }
-      }
+  dropRows(lastPositions, count) {
+    for (let i = 0; i < count; i++) {
+      lastPositions.forEach((y, x) => {
+        this.map[y + i][x].value = 0;
+        this.map[y + i][x].cell.style.backgroundColor = GRAY;
+      });
     }
   }
 
