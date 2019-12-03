@@ -106,6 +106,12 @@ class Game {
     this.glass = new Glass();
 
     this.next = new Next();
+    this.scoreLabel = document.querySelector("#score");
+  }
+
+  setScore(count) {
+    this.score = this.score + count;
+    this.scoreLabel.innerHTML = this.score * 100;
   }
 
   tick() {
@@ -143,6 +149,9 @@ class Game {
         }
       }
     });
+    document.querySelector("#pause").addEventListener("click", () => {
+      this.timer_id ? this.pause() : this.run();
+    });
   }
 
   stop() {}
@@ -153,6 +162,7 @@ class Game {
 
   pause() {
     clearTimeout(this.timer_id);
+    this.timer_id = null;
   }
 }
 
@@ -235,6 +245,7 @@ class Glass {
         this.map[y + i][x].cell.style.backgroundColor = GRAY;
       });
     }
+    game.setScore(count);
   }
 
   down() {
@@ -284,7 +295,7 @@ class Shape {
     this.x = 5;
     this.y = -1;
     this.position = 0;
-    const rand = Math.floor(Math.random() * (5 + 1));
+    const rand = Math.floor(Math.random() * SHAPES.length);
     //const rand = 2
     this.getShape = SHAPES[rand];
     this.glass = glass;
