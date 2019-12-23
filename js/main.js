@@ -164,6 +164,12 @@ class Game {
     clearTimeout(this.timer_id);
     this.timer_id = null;
   }
+
+  over() {
+    this.pause();
+    alert("GAME OVER!");
+    this.glass.clear();
+  }
 }
 
 class Next {
@@ -287,6 +293,15 @@ class Glass {
     }
 
     return is_draw;
+  }
+
+  clear() {
+    for (let i = 0; i < this.height; i++) {
+      for (let j = 0; j < this.width; j++) {
+        this.map[i][j].cell.style.backgroundColor = GRAY;
+        this.map[i][j].value = 0;
+      }
+    }
   }
 }
 
