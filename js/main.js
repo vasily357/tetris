@@ -17,6 +17,12 @@ const SHAPES = [
         { x: x - 1, y: y },
         { x: x + 1, y: y },
         { x: x + 1, y: y + 1 }
+      ],
+      (x, y) => [
+        { x: x, y: y },
+        { x: x - 1, y: y },
+        { x: x - 1, y: y + 1 },
+        { x: x - 1, y: y + 2 }
       ]
     ],
     [
@@ -51,6 +57,12 @@ const SHAPES = [
         { x: x - 1, y: y },
         { x: x - 1, y: y + 1 },
         { x: x + 1, y: y }
+      ],
+      (x, y) => [
+        { x: x, y: y },
+        { x: x - 1, y: y },
+        { x: x, y: y + 1 },
+        { x: x, y: y + 2 }
       ]
     ],
     [
