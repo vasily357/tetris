@@ -134,7 +134,7 @@ class Game {
       this.next.draw(this.nextShape.getShape[this.nextShape.position](1, 0));
     }
     if (!this.shape.step("down")) {
-      this.shape = undefined;
+      this.check();
     }
     this.timer_id = setTimeout(this.tick.bind(this), this.interval);
   }
@@ -155,9 +155,8 @@ class Game {
         this.shape.step("right");
       }
       if (event.code === "ArrowDown") {
-        const step = this.shape.step("down");
-        if (!step) {
-          this.shape = undefined;
+        if (!this.shape.step("down")) {
+          this.check();
         }
       }
     });
@@ -166,7 +165,9 @@ class Game {
     });
   }
 
-  stop() {}
+  check() {
+    this.shape = undefined;
+  }
 
   run() {
     this.tick();
@@ -181,28 +182,6 @@ class Game {
     this.pause();
     alert("GAME OVER!");
     this.glass.clear();
-  }
-}
-
-class Next {
-  constructor() {
-    const cells = Array.from(document.querySelectorAll("#next .cell"));
-
-    this.map = [
-      [cells[0], cells[1], cells[2], cells[3]],
-      [cells[4], cells[5], cells[6], cells[7]],
-      [cells[8], cells[9], cells[10], cells[11]],
-      [cells[12], cells[13], cells[14], cells[15]]
-    ];
-  }
-
-  draw(shape) {
-    this.map.forEach(row =>
-      row.forEach(cell => (cell.style.backgroundColor = WHITE))
-    );
-    shape.forEach(
-      coord => (this.map[coord.y][coord.x].style.backgroundColor = ORANGE)
-    );
   }
 }
 
@@ -266,13 +245,21 @@ class Glass {
     game.setScore(count);
   }
 
-  down() {
-    this.shapeCoordinates.forEach(coord => {
-      this.map[coord.y][coord.x].value = 1;
-      this.map[coord.y][coord.x].cell.style.backgroundColor = GREEN;
-    });
-    this.shapeCoordinates = undefined;
-    this.checkRows();
+  fix() {
+    let result;
+    if (this.shapeCoordinates) {
+      this.shapeCoordinates.forEach(coord => {
+        this.map[coord.y][coord.x].value = 1;
+        this.map[coord.y][coord.x].cell.style.backgroundColor = GREEN;
+      });
+      this.shapeCoordinates = undefined;
+      this.checkRows();
+      result = true;
+    } else {
+      result = false;
+    }
+
+    return result;
   }
 
   draw(shape) {
@@ -333,12 +320,18 @@ class Shape {
   }
 
   down() {
-    const shape = this.getShape[this.position](this.x, this.y + 1);
+    const new_y = ++this.y;
+
+    console.log("NEW_Y", new_y);
+
+    const shape = this.getShape[this.position](this.x, new_y);
     const draw = this.glass.draw(shape);
     if (draw) {
-      this.y++;
+      this.y = new_y;
     } else {
-      this.glass.down();
+      if (!this.glass.fix()) {
+        game.over();
+      }
     }
     return draw;
   }
@@ -363,6 +356,28 @@ class Shape {
     if (this.glass.draw(shape)) {
       this.position = position;
     }
+  }
+}
+
+class Next {
+  constructor() {
+    const cells = Array.from(document.querySelectorAll("#next .cell"));
+
+    this.map = [
+      [cells[0], cells[1], cells[2], cells[3]],
+      [cells[4], cells[5], cells[6], cells[7]],
+      [cells[8], cells[9], cells[10], cells[11]],
+      [cells[12], cells[13], cells[14], cells[15]]
+    ];
+  }
+
+  draw(shape) {
+    this.map.forEach(row =>
+      row.forEach(cell => (cell.style.backgroundColor = WHITE))
+    );
+    shape.forEach(
+      coord => (this.map[coord.y][coord.x].style.backgroundColor = ORANGE)
+    );
   }
 }
 
