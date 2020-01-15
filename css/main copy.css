@@ -3,24 +3,22 @@ html {
 }
 
 body {
-  display: grid;
-  grid-template-areas: 
-    "main sidebar"
-    "footer footer";
-  grid-template-rows: 80% 20%;
-  grid-template-columns: 70% 30%;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
   margin: 0;
+  padding: 3% 0 3% 3%;
+}
+
+#field {
+  display: flex;
+  flex-direction: row;
 }
 
 #glass {
-  grid-area: main;
   display: grid;
   grid-template: repeat(20, 4vh) / repeat(10, 4vh);
-}
-
-#panel {
-  grid-area: sidebar;
 }
 
 #next {
@@ -30,6 +28,11 @@ body {
 
 .cell {
   border: 0.1vh solid white;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
 }
 
 .cell {
@@ -42,12 +45,23 @@ body {
   width: 3em;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
+.mobile_controls {
+  justify-content: space-between;
+  
 }
 
-.mobile_controls {
-  grid-area: footer;
-  justify-content: space-between;
+.arrow_left {
+  
+}
+
+.turn {
+  border-radius: 100%;
+}
+
+.down {
+  
+}
+
+.arrow_right {
+  
 }

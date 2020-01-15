@@ -17,44 +17,48 @@
     />
     <link rel="stylesheet" href="/tetris/css/main.css" type="text/css" />
   </head>
-  <body>
-    <div id="field">
-      <div id="glass">
-        <template id="row_tpl">
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-        </template>
+  <body> 
+    <div id="glass">
+      <template id="row_tpl">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+      </template>
+    </div>
+    <div id="panel">
+      <div id="next">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
       </div>
-      <div id="panel">
-        <div id="next">
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-        </div>
-        <div id="score">0</div>
-        <div id="pause">PAUSE</div>
-      </div>
+      <div id="score">0</div>
+      <div id="pause">PAUSE</div>
+    </div>
+    <div class="row mobile_controls">
+      <div class="button arrow_left"></div>
+      <div class="button turn"></div>
+      <div class="button down"></div>
+      <div class="button arrow_right"></div>
     </div>
     <script src="/tetris/js/main.js"></script>
   </body>
