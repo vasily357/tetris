@@ -4,7 +4,7 @@ html {
 
 body {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "main sidebar"
     "footer footer";
   grid-template-rows: 80% 20%;
