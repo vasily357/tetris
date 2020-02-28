@@ -146,7 +146,7 @@ class Game {
         return;
       }
       if (event.code === "ArrowUp") {
-        this.shape.turn();
+        this.shape.step("turn");
       }
       if (event.code === "ArrowLeft") {
         this.shape.step("left");
@@ -163,6 +163,11 @@ class Game {
     document.querySelector("#pause").addEventListener("click", () => {
       this.timer_id ? this.pause() : this.run();
     });
+    Array.from(document.querySelectorAll('.mobile_controls .button')).forEach(button => button.addEventListener('click', event => {
+      if(!this.shape.step(event.target.classList[1]) && event.target.classList[1] === 'down') {
+        this.check();
+      }
+    }))
   }
 
   check() {

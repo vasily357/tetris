@@ -63,13 +63,13 @@ body {
   background-color: orange;
 }
 
-.arrow_left {
+.left {
   border-top: 1.5em solid transparent;
   border-right: 3em solid orange;
   border-bottom: 1.5em solid transparent;
 }
 
-.arrow_right {
+.right {
   border-top: 1.5em solid transparent;
   border-left: 3em solid orange;
   border-bottom: 1.5em solid transparent;
@@ -79,4 +79,11 @@ body {
   border-left: 1.5em solid transparent;
   border-right: 1.5em solid transparent;
   border-top: 3em solid orange;
+}
+
+/* --- MEDIA --- */
+@media screen and (min-width: 1000px) {
+  .mobile_controls {
+    display: none;
+  }
 }
