@@ -112,6 +112,7 @@ class Game {
     this.timer_id = null;
     this.score = 0;
     this.interval = 1000;
+    this.tmp_interval = 1000;
     this.level = 1;
     this.glass = new Glass();
     this.next = new Next();
@@ -164,11 +165,15 @@ class Game {
     Array.from(document.querySelectorAll('.mobile_controls .button')).forEach(button => {
       if(button.classList[1] === 'down') {
         button.addEventListener('touchstart', () => {
-          this.touch_timer = setTimeout(() => this.interval = 300, this.touchd_uration);
+          this.touch_timer = setTimeout(() => {
+            this.tmp_interval = this.interval;
+            this.interval = 100;
+          }, this.touchd_uration);
         });
         button.addEventListener('touchend', () => {
           if(this.touch_timer) {
             clearTimeout(this.touch_timer);
+            this.interval = this.tmp_interval
           }
         });
       } else {
