@@ -111,14 +111,13 @@ class Game {
   constructor() {
     this.timer_id = null;
     this.score = 0;
-
     this.interval = 1000;
     this.level = 1;
-
     this.glass = new Glass();
-
     this.next = new Next();
     this.scoreLabel = document.querySelector("#score");
+    this.touch_timer = null;
+    this.touch_duration = 500;
   }
 
   setScore(count) {
@@ -127,7 +126,6 @@ class Game {
   }
 
   tick() {
-    //console.log("tick");
     if (!this.shape) {
       this.shape = this.nextShape || new Shape(this.glass);
       this.nextShape = new Shape(this.glass);
@@ -163,11 +161,20 @@ class Game {
     document.querySelector("#pause").addEventListener("click", () => {
       this.timer_id ? this.pause() : this.run();
     });
-    Array.from(document.querySelectorAll('.mobile_controls .button')).forEach(button => button.addEventListener('click', event => {
-      if(!this.shape.step(event.target.classList[1]) && event.target.classList[1] === 'down') {
-        this.check();
+    Array.from(document.querySelectorAll('.mobile_controls .button')).forEach(button => {
+      if(button.classList[1] === 'down') {
+        button.addEventListener('touchstart', () => {
+          this.touch_timer = setTimeout(() => this.interval = 300, this.touchd_uration);
+        });
+        button.addEventListener('touchend', () => {
+          if(this.touch_timer) {
+            clearTimeout(this.touch_timer);
+          }
+        });
+      } else {
+        button.addEventListener('click', event => this.shape.step(event.target.classList[1]))
       }
-    }))
+    })
   }
 
   check() {
@@ -326,9 +333,6 @@ class Shape {
 
   down() {
     const new_y = ++this.y;
-
-    console.log("NEW_Y", new_y);
-
     const shape = this.getShape[this.position](this.x, new_y);
     const draw = this.glass.draw(shape);
     if (draw) {

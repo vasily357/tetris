@@ -24,6 +24,10 @@ body {
   grid-area: sidebar;
 }
 
+#pause:hover {
+  cursor: pointer;
+}
+
 #next {
   display: grid;
   grid-template: repeat(4, 3vh) / repeat(4, 3vh);
@@ -42,7 +46,10 @@ body {
   height: 0;
   width: 0;
   margin: 0 2vh;
-  
+}
+
+.button:hover {
+  cursor: pointer;
 }
 
 .row {
