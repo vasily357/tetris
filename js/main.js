@@ -166,17 +166,17 @@ class Game {
       if(button.classList[1] === 'down') {
         button.addEventListener('touchstart', () => {
           console.log('touchstart')
-          // this.touch_timer = setTimeout(() => {
-          //   this.tmp_interval = this.interval;
-          //   this.interval = 100;
-          // }, this.touchd_uration);
+          this.touch_timer = setTimeout(() => {
+            this.tmp_interval = this.interval
+            this.interval = 100;
+          }, this.touch_duration);
         });
         button.addEventListener('touchend', () => {
           console.log('touched')
-          // if(this.touch_timer) {
-          //   clearTimeout(this.touch_timer);
-          // }
-          // this.interval = this.tmp_interval
+          if(this.touch_timer) {
+            clearTimeout(this.touch_timer);
+          }
+          this.interval = this.tmp_interval
         });
       } else {
         button.addEventListener('click', event => this.shape?.step(event.target.classList[1]))
