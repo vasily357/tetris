@@ -165,19 +165,21 @@ class Game {
     Array.from(document.querySelectorAll('.mobile_controls .button')).forEach(button => {
       if(button.classList[1] === 'down') {
         button.addEventListener('touchstart', () => {
-          this.touch_timer = setTimeout(() => {
-            this.tmp_interval = this.interval;
-            this.interval = 100;
-          }, this.touchd_uration);
+          console.log('touchstart')
+          // this.touch_timer = setTimeout(() => {
+          //   this.tmp_interval = this.interval;
+          //   this.interval = 100;
+          // }, this.touchd_uration);
         });
         button.addEventListener('touchend', () => {
-          if(this.touch_timer) {
-            clearTimeout(this.touch_timer);
-            this.interval = this.tmp_interval
-          }
+          console.log('touched')
+          // if(this.touch_timer) {
+          //   clearTimeout(this.touch_timer);
+          // }
+          // this.interval = this.tmp_interval
         });
       } else {
-        button.addEventListener('click', event => this.shape.step(event.target.classList[1]))
+        button.addEventListener('click', event => this.shape?.step(event.target.classList[1]))
       }
     })
   }
