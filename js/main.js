@@ -118,7 +118,7 @@ class Game {
     this.next = new Next();
     this.scoreLabel = document.querySelector("#score");
     this.touch_timer = null;
-    this.touch_duration = 300;
+    this.touch_duration = 200;
   }
 
   setScore(count) {
